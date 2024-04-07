@@ -8,8 +8,7 @@ router = APIRouter()
 
 @router.get("/videos")
 def get_videos(db: Session = Depends(get_db), cursor: int = None, page_size: int = 10):
-    query = db.query(Video).group_by(
-        Video.video_id).order_by(Video.published_at.desc())
+    query = db.query(Video).group_by(Video.video_id).order_by(Video.published_at.desc())
 
     if cursor:
         query = query.filter(Video.id < cursor)
