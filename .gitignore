@@ -161,4 +161,3 @@ cython_debug/
 
 # Testing folder (Manual)
 testing/
-core/
