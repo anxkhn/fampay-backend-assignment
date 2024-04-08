@@ -1,7 +1,7 @@
-[x] -  Dockerize
-[x] - FastAPI
-[x] - RelationDB
-[X] - Redis (for most recent caching)
-[] - Celery
-[X] - Cursor Based Pagination 
-[X] - Invidious API support
+- [x] Dockerize
+- [x] FastAPI
+- [x] Relational Database
+- [x] Redis (for most recent caching)
+- [ ] Celery
+- [x] Cursor-Based Pagination 
+- [x] Invidious API support
