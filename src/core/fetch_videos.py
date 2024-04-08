@@ -11,8 +11,14 @@ ISO_DATE_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
 YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
 
-redis_client = redis.Redis(host=config.REDIS_HOST, port=config.REDIS_PORT)
+redis_working = False
 
+try:
+    redis_client = redis.Redis(host=config.REDIS_HOST, port=config.REDIS_PORT)
+    redis_client.ping()
+    redis_working = True
+except:
+    print("Unable to connect to redis")
 
 def get_currenttime():
     return datetime.now().strftime(ISO_DATE_FORMAT)
@@ -34,7 +40,9 @@ def update_fetch_history(last_video_id, last_fetch_time):
 
 
 def fetch_youtube_videos():
-    last_successful_fetch = redis_client.get("last_successful_fetch")
+    last_successful_fetch = None
+    if redis_working:
+        last_successful_fetch = redis_client.get("last_successful_fetch")
     last_fetch_info = get_last_fetch_info()
     published_after_date = (
         datetime.strptime(last_successful_fetch.decode(), ISO_DATE_FORMAT)
@@ -85,7 +93,8 @@ def fetch_videos_from_youtube(published_after_date):
             print(f"Successful fetch from YouTube API: {key}")
 
             current_time = get_currenttime()
-            redis_client.set("last_successful_fetch", current_time)
+            if redis_working:
+                redis_client.set("last_successful_fetch", current_time)
             update_fetch_history(last_video_id, current_time)
             try:
                 db.commit()

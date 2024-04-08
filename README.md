@@ -185,7 +185,7 @@ This application can be run either locally or using Docker. Choose the method th
 
 7. **Run the application within the virtual environment:**
     ```bash
-    uvicorn src.app:app --reload
+    cd src && uvicorn app:app --reload
     ```
 
     The API will be accessible at `http://localhost:8000`.
@@ -279,7 +279,23 @@ Swagger UI provides an interactive documentation interface for exploring the API
 - **Screenshot 7**: Shows an example of a response when fetching videos using the `/videos` endpoint.
   ![Screenshot 7](docs/screenshots/screenshot7.png)
 
-By leveraging FastAPI and its integration with Swagger UI, developers can streamline API development, facilitate documentation, and enhance the overall API experience for consumers.
+## Deployed Version
+
+A live version of the application is available at [https://fampay-backend-assignment.onrender.com](https://fampay-backend-assignment.onrender.com). 
+
+However, due to the nature of this project, which involves constant fetching of videos and Redis caching, the free quota is quickly exhausted.
+
+Upon accessing the deployed version, please note the following:
+
+1. **Cold Start Delay**: There might be a delay of up to 50 seconds for the initial response due to the nature of free services on Render. This delay occurs during the startup of the server.
+
+2. **Health Check**: To ensure that the server is operational, you can access the `/ping` endpoint [here](https://fampay-backend-assignment.onrender.com/ping). A successful response indicates that the server is healthy and operational.
+
+**Logs**: You can view the project logs, including information about video fetching and server operations, in real-time on the deployed version. Here's a screenshot of the project logs:
+
+   ![Screenshot 8](docs/screenshots/screenshot8.png)
+
+Please note that the deployed version might experience frequent downtime or performance issues due to resource limitations in the free tier. Therefore, it is **not recommeneded** to  explore the API endpoints and functionality of the project without setting up the application locally.
 
 ## Docker Compose
 
