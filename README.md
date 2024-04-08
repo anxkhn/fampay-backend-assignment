@@ -217,45 +217,67 @@ docker-compose up --build
 
 The API will be accessible at `http://localhost:8000`.
 
-## API Endpoints
+Incorporating FastAPI into your project not only provides robust API functionality but also seamlessly integrates with Swagger UI, allowing for easy API documentation and exploration. Let's elaborate on the provided API endpoints and Swagger UI integration:
 
-### Health Check
+### API Endpoints
 
-```
-GET /ping
-```
+#### Health Check
 
-This endpoint returns a simple "Pong!" message to check if the API is running.
+- **Endpoint**: `GET /ping`
+- **Purpose**: This endpoint serves as a simple health check for the API. It returns a "Pong!" message, indicating that the API is operational.
 
-### Fetch Videos
+#### Fetch Videos
 
-```
-GET /videos?cursor={cursor}&page_size={page_size}
-```
-This endpoint returns a paginated list of videos sorted by publish date (descending).
-- `cursor` (optional): The cursor value for pagination. If not provided, it will return the first page of results.
-- `page_size` (optional, default: 10): The number of videos to return per page.
+- **Endpoint**: `GET /videos`
+- **Parameters**:
+  - `cursor` (optional): A cursor value for pagination. If not provided, it fetches the first page of results.
+  - `page_size` (optional, default: 10): The number of videos to return per page.
+- **Purpose**: This endpoint retrieves a paginated list of videos sorted by their publish date in descending order. It allows clients to fetch videos with optional pagination parameters.
+- **Expected Response**:
+  ```json
+  {
+    "videos": [
+      {
+        "video_id": "...",
+        "title": "...",
+        "description": "...",
+        "published_at": "...",
+        "thumbnails": "..."
+      },
+      // ... other videos
+    ],
+    "next_cursor": "..." // (optional) ID of the last video in the current page
+  }
+  ```
 
-**Expected response:**
-   ```json
-   {
-     "videos": [
-       {
-         "video_id": "...",
-         "title": "...",
-         "description": "...",
-         "published_at": "...",
-         "thumbnails": "..."
-       },
-       // ... other videos
-     ],
-     "next_cursor": "..." (optional, ID of the last video in the current page)
-   }
-   ```
+### Swagger UI Integration
 
-This endpoint returns a paginated list of videos sorted in descending order of their published datetime. The response includes a `next_cursor` value that can be used to fetch the next page of results.
+#### `/docs`
 
+Swagger UI provides an interactive documentation interface for exploring the API endpoints. It offers a user-friendly way to understand the available endpoints, their parameters, and expected responses.
 
+- **Screenshot 1**: Overview of the Swagger UI interface.
+  ![Screenshot 1](docs/screenshots/screenshot_1.png)
+
+#### Ping (HealthCheck)
+
+- **Screenshot 2**: Shows the endpoint for health check (`GET /ping`) in Swagger UI.
+  ![Screenshot 2](docs/screenshots/screenshot_2.png)
+
+- **Screenshot 3**: Demonstrates the response received upon pinging the health check endpoint.
+  ![Screenshot 3](docs/screenshots/screenshot_3.png)
+
+#### Fetch Videos
+
+- **Screenshot 4,5 & 6**: Illustrates the endpoint for fetching videos (`GET /videos`) in Swagger UI.
+  ![Screenshot 4](docs/screenshots/screenshot_4.png)
+
+  ![Screenshot 5](docs/screenshots/screenshot_5.png)
+
+  ![Screenshot 6](docs/screenshots/screenshot_6.png)
+
+- **Screenshot 7**: Shows an example of a response when fetching videos using the `/videos` endpoint.
+  ![Screenshot 7](docs/screenshots/screenshot_7.png)
 
 ## Docker Compose
 
