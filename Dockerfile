@@ -2,16 +2,17 @@
 FROM python:3.10
 
 # Set environment variables
-ENV REDIS_HOST=localhost
+ENV REDIS_HOST=redis
 ENV REDIS_PORT=6379
 
 # Set working directory
 WORKDIR /app
 
 # Copy the application code
-COPY . /app
+COPY ./src /app
 
 # Install dependencies
+COPY requirements.txt /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Expose FastAPI port
